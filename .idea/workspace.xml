@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0db9d3fe-4e77-4fba-b2f6-9fa5cdf1a265" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.venv/bin/py.test" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.venv/bin/pytest" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lnxmanager/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lnxmanager/__main__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lnxmanager/cli.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lnxmanager/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lnxmanager/controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/tests_lnxmanager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
-    </list>
+    <list default="true" id="0db9d3fe-4e77-4fba-b2f6-9fa5cdf1a265" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,6 +18,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -52,7 +52,7 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
