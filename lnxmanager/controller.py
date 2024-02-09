@@ -1,7 +1,13 @@
 import os
 
 
-def change_directory() -> None:
+def classify_file(path: str) -> str:
+    pass
+
+def get_size_of_file(path: str) -> str:
+    pass
+
+def show_rights_for_file(path: str) -> str:
     pass
 
 
