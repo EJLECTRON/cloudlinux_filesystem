@@ -1,21 +1,16 @@
 import os
 
-
-def classify_file(path: str) -> str:
-    pass
-
-def get_size_of_file(path: str) -> str:
-    pass
-
 def show_rights_for_file(path: str) -> str:
     pass
 
 
 
 if __name__ == "__main__":
-    folder = '.'
-    filepaths = [os.path.join(folder, i) for i in os.listdir(folder)]
+    # folder = '.'
+    # filepaths = [os.path.join(folder, i) for i in os.listdir(folder)]
+    #
+    # print(os.getcwd())
+    # os.chdir(str(os.path.abspath(os.sep)))
+    # print(os.getcwd())
 
-    print(os.getcwd())
-    os.chdir(str(os.path.abspath(os.sep)))
-    print(os.getcwd())
+    os.chdir("/home/ejlectron/")

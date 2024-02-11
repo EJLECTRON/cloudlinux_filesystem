@@ -6,7 +6,7 @@ __version__ = "0.1.0"
 (
     SUCCESS,
     DIR_ERROR,
-    FILE_ERROR,
+    FILE_ERROR
 ) = range(3)
 
 ERRORS = {
