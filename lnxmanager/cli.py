@@ -1,14 +1,21 @@
 """This module provides the lnxmanager CLI"""
 import typer, os
 from typing_extensions import Annotated
-from subprocess import check_output, PIPE
 from typing import Optional
+from subprocess import check_output, PIPE
+
+from decimal import Decimal
+
 from lnxmanager import __app_name__, __version__
 
-app = typer.Typer()
+help = "Welcome to lnxmanager! A simple CLI to manage your Linux system."
+app = typer.Typer(help=help)
 
 
 def _version_callback(value: bool) -> None:
+    """ show the application's version and exit
+    :param value: the value of the version option: bool
+    """
     if value:
         typer.echo(f"{__app_name__} v{__version__}")
         raise typer.Exit()
@@ -22,9 +29,12 @@ def main(
             "-v",
             help="Show the application's version and exit.",
             callback=_version_callback,
-            is_eager=True,
+            is_eager=True
         )
 ) -> None:
+    """The main function of the CLI
+    :param version: show the application's version and exit: bool
+    """
     pass
 
 #TODO: make it work
@@ -33,7 +43,9 @@ def change_dir(
         path: str = typer.Argument(..., help="The path to the directory to analyse."),
         size_threshold=None
 ) -> None:
-    """ change directory to analyse"""
+    """ change directory to analyse
+    :param path: the path to the directory: str
+    :param size_threshold: the size threshold to filter the files: int"""
     if os.path.isdir(path):
         os.chdir(path)
         # os.system('cd /home/ejlectron/Documents/')
@@ -57,41 +69,44 @@ def switch_to_parent_dir() -> None:
 
     raise typer.Exit()
 
-#TODO: test it
-@app.command(name="file_type")
-def file_type(path: str = typer.Argument(..., help="The path to the file to analyse.")) -> None:
-    """ get the type of file"""
-    spaces = " " * 10
-    if os.path.isfile(path):
-        text = str(os.path.splitext(os.path.basename(path))[0]) + spaces + str(os.path.splitext(path)[1])
-        typer.echo(text)
-    else:
-        raise typer.BadParameter(f"{path} is not a valid file")
 
 #TODO: complete it
-def get_file_info(path: str) -> tuple:
+@app.command(name="file_info")
+def get_file_info(path: str) -> None:
     """ get the type of file
-    :param path: the path to the file: str
+    :param path: the path to the object: str
     :return full info about file in the following format: str
             (filename, file type, file size, basic permissions)
     """
     file_type = __get_file_type(path)
     file_size = __get_file_size(path)
-    permissions = __get_full_permissions(path)
+    read_permission, write_permission, execute_permission = get_basic_permissions(path).split("   ")
+
+    typer.echo(f"Info about {path}\n"
+               f"•file name: {file_type[0]}\n"
+               f"•file extension: {file_type[1]}\n"
+               f"•file size: {file_size}\n"
+               f"•permissions for owner user: read:{read_permission}, write:{write_permission}, execute:{execute_permission}")
+
+    raise typer.Exit()
 
 
-def __get_file_type(path: str) -> str:
+
+#TODO: test it
+def __get_file_type(path: str) -> tuple:
     """ get the type of file
-    :param path: the path to the file: str
-    :return the type of the file: str"""
-    return os.path.splitext(path)[1]
+    :param path: the path to the object: str
+    :return name and extension of the file: tuple"""
+    filename, file_extension = os.path.basename(path).split('.')
+    return filename, file_extension
 
 
 def __get_file_size(path: str) -> str:
     """ show the sizes of files in the directory
-    :param path: the path to the file: str
+    :param path: the path to the object: str
     :return the converted size of the file with the appropriate unit (example: 3 MB): str
     """
+    print(os.path.getsize(path))
     return __reduce_file_size(int(os.path.getsize(path)))
 
 
@@ -100,25 +115,63 @@ def __reduce_file_size(size: int) -> str:
     :param size: the size of file in bytes: int
     :return the converted size of the file with the appropriate unit (example: 3 MB): str
     """
-    tuple_sizes, index = ("bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"), 0
+    tuple_sizes, index = ("KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"), 0
 
-    while size >= 1024 and index < len(tuple_sizes) - 1:
-        size /= 1024
+    presice_num = Decimal(size) / 1000
+
+    while presice_num >= 1024 and index < len(tuple_sizes) - 1:
+        presice_num /= 1024
         index += 1
 
-    return f"{size} {tuple_sizes[index]}"
+    return f"{str(presice_num)} {tuple_sizes[index]}"
 
 #TODO: test it
-def __get_full_permissions(path: str) -> dict:
-    """get the permissions of file"""
+def get_full_permissions(path: str) -> None:
+    """get the permissions of the object
+    :params: path: the path to the object: str
+    :return: """
+    result = {}
+
+    if os.path.isfile(path):
+        result = get_full_permissions_for_file(path)
+    elif os.path.isdir(path):
+        result = get_full_permissions_for_dir(path)
+
+    if result['error'] != "Success":
+        typer.echo(f"An error has occurred: {result['error']}")
+    else:
+        typer.echo('good')
+        #typer.echo(result)
+
+    typer.Exit()
+
+
+def get_full_permissions_for_file(path: str) -> dict:
+    """ get permissions for file
+    :param path: the path to the object: str """
     try:
         raw_permissions = check_output(['ls', '-l', path], stderr=PIPE).decode('utf-8')
-        result_permissions = __process_permissions(raw_permissions)
-        return result_permissions
+        result = __process_permissions(raw_permissions)
+        result['error'] = "Success"
+        return result
     except PermissionError:
         return {"error": "Permission denied"}
     except FileNotFoundError:
         return {"error": "File not found"}
+    
+#TODO: make it
+def get_full_permissions_for_dir(path: str) -> dict:
+    return {'error': "Success"}
+
+
+def get_basic_permissions(path: str) -> str:
+    """ show the basic permissions of file
+    :param path: the path to the object: str
+    :return the basic permissions of the file: str
+    """
+
+    return __process_permissions(check_output(['ls', '-l', path], stderr=PIPE).decode('utf-8'))["owner rights"]
+
 
 #TODO: test it
 @app.command(name="show_permissions")
@@ -133,23 +186,20 @@ def show_permissions(
 ) -> None:
     """ show the permissions of file
     :param full: show the full permissions of file: bool
-    :param path: the path to the file: str
+    :param path: the path to the object: str
     :return the permissions of the file: str
     """
+    if not os.path.exists(path):
+        raise typer.BadParameter("File doesn't exist")
+
     if full:
-        typer.echo(__get_full_permissions(path))
+        typer.echo(get_full_permissions(path))
     else:
-        typer.echo(__get_basic_permissions(path))
+        typer.echo(get_basic_permissions(path))
 
-#TODO: test it
-def __get_basic_permissions(path: str) -> str:
-    """ show the basic permissions of file
-    :param path: the path to the file: str
-    :return the basic permissions of the file: str
-    """
-    return __process_permissions(check_output(['ls', '-l', path], stderr=PIPE).decode('utf-8'))["user owner"]
+    typer.Exit()
 
-#TODO: test it
+
 def __process_permissions(permissions: str) -> dict:
     """ process the permissions of file
     :param permissions: the permissions of file: str
@@ -167,9 +217,11 @@ def __process_permissions(permissions: str) -> dict:
                    "group owner": ""}
 
     given_info = permissions.split()
+    print(given_info)
 
     # rights
-    splitted_rights = [(given_info[0][i:i + 3]) for i in range(0, len(given_info[0]) - 1, 3)]
+    splitted_rights = [(given_info[0][i:i + 3]) for i in range(1, len(given_info[0]) - 1, 3)]
+    print(splitted_rights)
 
     for right, field in zip(splitted_rights, ["owner rights", "group rights", "other rights"]):
         result_dict[field] += __decode_rights(right)
@@ -189,9 +241,14 @@ def __decode_rights(rights: str) -> str:
                      "x": "execute",
                      "-": "no permission"}
 
-    result = ""
+    result, index = "", 0
 
     for right in rights:
-        result += decoding_dict[right] + " "
+        if right != "-":
+            result += decoding_dict[right] + "   "
+        else:
+            result += decoding_dict[right] + f" to {list(decoding_dict.values())[index]}" + "   "
+
+        index += 1
 
     return result.strip()

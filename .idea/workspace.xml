@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0db9d3fe-4e77-4fba-b2f6-9fa5cdf1a265" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lnxmanager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lnxmanager/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lnxmanager/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/lnxmanager/cli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lnxmanager/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/lnxmanager/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tests_lnxmanager.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/tests_lnxmanager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +67,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.controller">
+  <component name="RunManager" selected="Python tests.Python tests for tests_lnxmanager.test_version">
     <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="filesystem_cloudlinux" />
       <option name="ENV_FILES" value="" />
@@ -156,8 +155,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.controller" />
         <item itemvalue="Python tests.Python tests for tests_lnxmanager.test_version" />
+        <item itemvalue="Python.controller" />
         <item itemvalue="Python.__main__" />
         <item itemvalue="Python.main" />
       </list>
@@ -186,7 +185,9 @@
       <workItem from="1707572886720" duration="631000" />
       <workItem from="1707574838683" duration="7782000" />
       <workItem from="1707589151555" duration="2483000" />
-      <workItem from="1707600348291" duration="14483000" />
+      <workItem from="1707600348291" duration="15103000" />
+      <workItem from="1707778469674" duration="4683000" />
+      <workItem from="1707809819313" duration="7690000" />
     </task>
     <servers />
   </component>
@@ -208,6 +209,6 @@
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$controller.coverage" NAME="controller Coverage Results" MODIFIED="1707575505594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lnxmanager" />
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$main.coverage" NAME="main Coverage Results" MODIFIED="1707345345712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1707477307171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lnxmanager" />
-    <SUITE FILE_PATH="coverage/filesystem_cloudlinux$.coverage" NAME=" Coverage Results" MODIFIED="1707477519409" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/filesystem_cloudlinux$.coverage" NAME=" Coverage Results" MODIFIED="1707809928701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>
