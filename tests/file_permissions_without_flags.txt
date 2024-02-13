@@ -1,0 +1,1 @@
+/home/ejlectron/filesystem_cloudlinux/test_data/images/shellos.png:rw-

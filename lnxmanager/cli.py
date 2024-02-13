@@ -117,60 +117,76 @@ def __reduce_file_size(size: int) -> str:
     """
     tuple_sizes, index = ("KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"), 0
 
-    presice_num = Decimal(size) / 1000
+    precise_num = Decimal(size) / 1000
 
-    while presice_num >= 1024 and index < len(tuple_sizes) - 1:
-        presice_num /= 1024
+    while precise_num >= 1024 and index < len(tuple_sizes) - 1:
+        precise_num /= 1024
         index += 1
 
-    return f"{str(presice_num)} {tuple_sizes[index]}"
+    return f"{str(precise_num)} {tuple_sizes[index]}"
+
 
 #TODO: test it
-def get_full_permissions(path: str) -> None:
+def get_full_permissions(path: str, human: bool) -> None:
     """get the permissions of the object
     :params: path: the path to the object: str
     :return: """
     result = {}
 
     if os.path.isfile(path):
-        result = get_full_permissions_for_file(path)
+        result = get_full_permissions_for_file(path, human)
     elif os.path.isdir(path):
-        result = get_full_permissions_for_dir(path)
+        result = get_full_permissions_for_dir(path, human)
 
     if result['error'] != "Success":
         typer.echo(f"An error has occurred: {result['error']}")
     else:
-        typer.echo('good')
-        #typer.echo(result)
+        typer.echo(result)
 
     typer.Exit()
 
 
-def get_full_permissions_for_file(path: str) -> dict:
+def get_full_permissions_for_file(path: str, human: bool) -> dict:
     """ get permissions for file
     :param path: the path to the object: str """
     try:
         raw_permissions = check_output(['ls', '-l', path], stderr=PIPE).decode('utf-8')
+
         result = __process_permissions(raw_permissions)
         result['error'] = "Success"
+        if human:
+            result["owner rights"] = __decode_rights(result["owner rights"])
+            result["group rights"] = __decode_rights(result["group rights"])
+            result["other rights"] = __decode_rights(result["other rights"])
         return result
     except PermissionError:
         return {"error": "Permission denied"}
     except FileNotFoundError:
         return {"error": "File not found"}
-    
+
+
 #TODO: make it
-def get_full_permissions_for_dir(path: str) -> dict:
+def get_full_permissions_for_dir(path: str, human: bool) -> dict:
     return {'error': "Success"}
 
 
-def get_basic_permissions(path: str) -> str:
-    """ show the basic permissions of file
+def get_basic_permissions(path: str, human: bool) -> dict:
+    """ show the basic permissions of object
     :param path: the path to the object: str
-    :return the basic permissions of the file: str
+    :return the basic permissions of the object: dict
     """
+    temp_result = {}
 
-    return __process_permissions(check_output(['ls', '-l', path], stderr=PIPE).decode('utf-8'))["owner rights"]
+    if os.path.isfile(path):
+        temp_result = get_full_permissions_for_file(path, human)
+    elif os.path.isdir(path):
+        temp_result = get_full_permissions_for_dir(path, human)
+
+    if temp_result['error'] != "Success":
+        return {"error": temp_result['error']}
+
+    return {"owner rights": temp_result["owner rights"], "error": "Success"}
+
 
 
 #TODO: test it
@@ -182,9 +198,16 @@ def show_permissions(
                         "--full",
                         "--f",
                         help="Show the full permissions of the file.",
+                        is_flag=True),
+        human: bool = typer.Option(
+                        False,
+                        "--human",
+                        "--h",  
+                        help="Show the permissions of the file in human readable format.",
                         is_flag=True)
 ) -> None:
     """ show the permissions of file
+    :param human:
     :param full: show the full permissions of file: bool
     :param path: the path to the object: str
     :return the permissions of the file: str
@@ -193,9 +216,9 @@ def show_permissions(
         raise typer.BadParameter("File doesn't exist")
 
     if full:
-        typer.echo(get_full_permissions(path))
+        typer.echo(get_full_permissions(path, human))
     else:
-        typer.echo(get_basic_permissions(path))
+        typer.echo(get_basic_permissions(path, human))
 
     typer.Exit()
 
@@ -217,38 +240,42 @@ def __process_permissions(permissions: str) -> dict:
                    "group owner": ""}
 
     given_info = permissions.split()
-    print(given_info)
+    #print(given_info)
 
-    # rights
-    splitted_rights = [(given_info[0][i:i + 3]) for i in range(1, len(given_info[0]) - 1, 3)]
-    print(splitted_rights)
+    # splitting rights into owner, group and other
+    split_rights = [(given_info[0][i:i + 3]) for i in range(1, len(given_info[0]) - 1, 3)]
+    #print(split_rights)
 
-    for right, field in zip(splitted_rights, ["owner rights", "group rights", "other rights"]):
-        result_dict[field] += __decode_rights(right)
 
-    # owners
+    for right, field in zip(split_rights, ["owner rights", "group rights", "other rights"]):
+        result_dict[field] = right
+
+
     result_dict["user owner"] = given_info[2]
     result_dict["group owner"] = given_info[3]
 
     return result_dict
 
-#TODO: test it
-def __decode_rights(rights: str) -> str:
-    """ decode the rights of file"""
+
+def __decode_rights(rights: str) -> list:
+    """ decode the rights of object
+    :param rights: the rights of object: str
+    :return readable for human rights of the object : list"""
 
     decoding_dict = {"r": "read",
                      "w": "write",
                      "x": "execute",
                      "-": "no permission"}
 
-    result, index = "", 0
+    result, index, temp_line = "", 0, ""
 
     for right in rights:
         if right != "-":
-            result += decoding_dict[right] + "   "
+            temp_line = " allowed"
         else:
-            result += decoding_dict[right] + f" to {list(decoding_dict.values())[index]}" + "   "
+            temp_line = f" to {list(decoding_dict.values())[index]}"
 
+        result += decoding_dict[right] + temp_line + "   "
         index += 1
 
-    return result.strip()
+    return result.strip().split("   ")
