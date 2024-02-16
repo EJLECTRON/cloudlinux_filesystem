@@ -1,10 +1,10 @@
 """This module provides the lnxmanager CLI"""
-import typer, os
-from typing_extensions import Annotated
-from typing import Optional
-from subprocess import check_output, PIPE
-
 from decimal import Decimal
+from subprocess import check_output, Popen, PIPE
+from typing import Optional
+
+import os
+import typer
 
 from lnxmanager import __app_name__, __version__
 
@@ -37,7 +37,8 @@ def main(
     """
     pass
 
-#TODO: make it work
+
+# TODO: make it work
 @app.command(name="change_dir")
 def change_dir(
         path: str = typer.Argument(..., help="The path to the directory to analyse."),
@@ -47,15 +48,13 @@ def change_dir(
     :param path: the path to the directory: str
     :param size_threshold: the size threshold to filter the files: int"""
     if os.path.isdir(path):
-        os.chdir(path)
-        # os.system('cd /home/ejlectron/Documents/')
-        typer.echo(f"you have switched to {os.getcwd()}")
-        with open("text.txt", "w") as f:
-            f.write("Hello, World!")
-    else:
-        raise typer.BadParameter(f"{path} is not a valid directory")
 
-#TODO: make it work
+        typer.echo(f"you have switched to {os.getcwd()}")
+    else:
+        raise typer.BadParameter(f"{path} is not a directory")
+
+
+# TODO: make it work
 @app.command(name="get_higher")
 def switch_to_parent_dir() -> None:
     """ switch to parent directory"""
@@ -70,7 +69,7 @@ def switch_to_parent_dir() -> None:
     raise typer.Exit()
 
 
-#TODO: complete it
+# TODO: complete it
 @app.command(name="file_info")
 def get_file_info(path: str) -> None:
     """ get the type of file
@@ -91,8 +90,7 @@ def get_file_info(path: str) -> None:
     raise typer.Exit()
 
 
-
-#TODO: test it
+# TODO: test it
 def __get_file_type(path: str) -> tuple:
     """ get the type of file
     :param path: the path to the object: str
@@ -126,8 +124,8 @@ def __reduce_file_size(size: int) -> str:
     return f"{str(precise_num)} {tuple_sizes[index]}"
 
 
-#TODO: test it
-def get_full_permissions(path: str, human: bool) -> None:
+# TODO: test it
+def get_full_permissions(path: str, human: bool) -> str:
     """get the permissions of the object
     :params: path: the path to the object: str
     :return: """
@@ -139,11 +137,13 @@ def get_full_permissions(path: str, human: bool) -> None:
         result = get_full_permissions_for_dir(path, human)
 
     if result['error'] != "Success":
-        typer.echo(f"An error has occurred: {result['error']}")
+        return f"An error has occurred: {result['error']}"
     else:
-        typer.echo(result)
-
-    typer.Exit()
+        return (f"Basic rights for users: {result['owner rights']}\n"
+                f"Basic rights for groups: {result['group rights']}\n"
+                f"Basic rights for owner: {result['other rights']}\n"
+                f"User owner: {result['user owner']}\n"
+                f"Group owner: {result['group owner']}")
 
 
 def get_full_permissions_for_file(path: str, human: bool) -> dict:
@@ -154,6 +154,7 @@ def get_full_permissions_for_file(path: str, human: bool) -> dict:
 
         result = __process_permissions(raw_permissions)
         result['error'] = "Success"
+
         if human:
             result["owner rights"] = __decode_rights(result["owner rights"])
             result["group rights"] = __decode_rights(result["group rights"])
@@ -165,14 +166,51 @@ def get_full_permissions_for_file(path: str, human: bool) -> dict:
         return {"error": "File not found"}
 
 
-#TODO: make it
 def get_full_permissions_for_dir(path: str, human: bool) -> dict:
-    return {'error': "Success"}
+    """ get permissions for directory
+    :param path: the path to the object: str
+    :param human: show the permissions of the file in human readable format: bool
+    :return the permissions of the directory: dict"""
+    try:
+        new_path = os.path.dirname(path)
+        raw_permissions = check_output(['ls', '-larth', new_path], stderr=PIPE).decode('utf-8')
+
+        for set_of_data in raw_permissions.split("\n"):
+            if set_of_data.split()[-1] == os.path.basename(path):
+                raw_permissions = set_of_data
+                break
+
+        result = __process_permissions(raw_permissions)
+        result['error'] = "Success"
+
+        if human:
+            result["owner rights"] = __decode_rights(result["owner rights"])
+            result["group rights"] = __decode_rights(result["group rights"])
+            result["other rights"] = __decode_rights(result["other rights"])
+
+        return result
+    except PermissionError:
+        return {"error": "Permission denied"}
+    except FileNotFoundError:
+        return {"error": "File not found"}
 
 
-def get_basic_permissions(path: str, human: bool) -> dict:
+def get_size_of_dir(data: str) -> str:
+    """ get the size of directory
+    :param path: the path to the object: str
+    :return the size of the directory: int"""
+    try:
+        return data.split('\n')[0].split()[1]
+    except PermissionError:
+        return "Permission denied"
+    except FileNotFoundError:
+        return "File not found"
+
+
+def get_basic_permissions(path: str, human: bool) -> str:
     """ show the basic permissions of object
     :param path: the path to the object: str
+    :param human: show the permissions of the file in human readable format: bool
     :return the basic permissions of the object: dict
     """
     temp_result = {}
@@ -183,28 +221,28 @@ def get_basic_permissions(path: str, human: bool) -> dict:
         temp_result = get_full_permissions_for_dir(path, human)
 
     if temp_result['error'] != "Success":
-        return {"error": temp_result['error']}
+        return f"An error has occurred: {temp_result['error']}"
+    else:
+        return (f"Basic rights for users: {temp_result['other rights']}\n"
+                f"User owner: {temp_result['user owner']}\n")
 
-    return {"owner rights": temp_result["owner rights"], "error": "Success"}
 
-
-
-#TODO: test it
+# TODO: test it
 @app.command(name="show_permissions")
 def show_permissions(
         path: str = typer.Argument(..., help="The path of the file to get permissions."),
         full: bool = typer.Option(
-                        False,
-                        "--full",
-                        "--f",
-                        help="Show the full permissions of the file.",
-                        is_flag=True),
+            False,
+            "--full",
+            "--f",
+            help="Show the full permissions of the file.",
+            is_flag=True),
         human: bool = typer.Option(
-                        False,
-                        "--human",
-                        "--h",  
-                        help="Show the permissions of the file in human readable format.",
-                        is_flag=True)
+            False,
+            "--human",
+            "--h",
+            help="Show the permissions of the file in human readable format.",
+            is_flag=True)
 ) -> None:
     """ show the permissions of file
     :param human:
@@ -240,16 +278,14 @@ def __process_permissions(permissions: str) -> dict:
                    "group owner": ""}
 
     given_info = permissions.split()
-    #print(given_info)
+    # print(given_info)
 
     # splitting rights into owner, group and other
     split_rights = [(given_info[0][i:i + 3]) for i in range(1, len(given_info[0]) - 1, 3)]
-    #print(split_rights)
-
+    # print(split_rights)
 
     for right, field in zip(split_rights, ["owner rights", "group rights", "other rights"]):
         result_dict[field] = right
-
 
     result_dict["user owner"] = given_info[2]
     result_dict["group owner"] = given_info[3]
@@ -279,3 +315,6 @@ def __decode_rights(rights: str) -> list:
         index += 1
 
     return result.strip().split("   ")
+
+if __name__ == "__main__":
+    get_full_permissions_for_dir('/home/ejlectron/filesystem_cloudlinux/test_data/images', True)

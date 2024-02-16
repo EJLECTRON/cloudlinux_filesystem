@@ -5,11 +5,11 @@ __version__ = "0.1.0"
 
 (
     SUCCESS,
-    DIR_ERROR,
-    FILE_ERROR
+    PATH_ERROR,
+    FLAG_ERROR
 ) = range(3)
 
 ERRORS = {
-    DIR_ERROR: "config directory error",
-    FILE_ERROR: "config file error"
+    PATH_ERROR: "Path doesn't reachable",
+    FLAG_ERROR: "There is no such flag"
 }

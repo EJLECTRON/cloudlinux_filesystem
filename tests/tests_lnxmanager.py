@@ -26,16 +26,19 @@ def test_file_info():
 
 def test_file_permissions_without_flags():
     directory = '/home/ejlectron/filesystem_cloudlinux/test_data/images'
+
     for file in os.listdir(directory):
         generate_answer_for_file_permissions_without_flags(directory + "/" + file)
         with open('file_permissions_without_flags.txt', 'r') as f:
             for line in f:
                 path, permissions = line.split(":")
                 result = runner.invoke(cli.app, ["show_permissions", path])
-                assert "{'owner rights': '" + permissions + "', 'error': 'Success'}" in result.stdout
+                assert "{'other rights': '" + permissions + "', 'error': 'Success'}" in result.stdout
+
+    os.remove('file_permissions_without_flags.txt')
 
 
 def generate_answer_for_file_permissions_without_flags(path):
     with open('file_permissions_without_flags.txt', 'w') as f:
         temp_raw_permissions = check_output(['ls', '-l', path], stderr=PIPE).decode('utf-8')
-        f.write(path + ":" + temp_raw_permissions[1:4])
+        f.write(path + ":" + temp_raw_permissions[7:10])

@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0db9d3fe-4e77-4fba-b2f6-9fa5cdf1a265" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lnxmanager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lnxmanager/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lnxmanager/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/lnxmanager/cli.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/file_permissions_without_flags.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/tests_lnxmanager.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/tests_lnxmanager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,28 +51,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for tests_lnxmanager.test_file_permissions.executor": "Run",
-    "Python tests.Python tests for tests_lnxmanager.test_file_permissions_without_flags.executor": "Run",
-    "Python tests.Python tests for tests_lnxmanager.test_version.executor": "Run",
-    "Python.__main__.executor": "Run",
-    "Python.controller.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "change__dir",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for tests_lnxmanager.test_file_permissions.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for tests_lnxmanager.test_file_permissions_without_flags.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for tests_lnxmanager.test_version.executor&quot;: &quot;Run&quot;,
+    &quot;Python.__main__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.controller.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;change__dir&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for tests_lnxmanager.test_file_permissions_without_flags">
-    <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+}</component>
+  <component name="RunManager" selected="Python.cli">
+    <configuration name="cli" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="filesystem_cloudlinux" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -84,7 +86,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lnxmanager/__main__.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lnxmanager/cli.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -166,11 +168,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.cli" />
         <item itemvalue="Python tests.Python tests for tests_lnxmanager.test_file_permissions_without_flags" />
         <item itemvalue="Python tests.Python tests for tests_lnxmanager.test_file_permissions" />
         <item itemvalue="Python tests.Python tests for tests_lnxmanager.test_version" />
         <item itemvalue="Python.controller" />
-        <item itemvalue="Python.__main__" />
       </list>
     </recent_temporary>
   </component>
@@ -201,6 +203,11 @@
       <workItem from="1707778469674" duration="4683000" />
       <workItem from="1707809819313" duration="8300000" />
       <workItem from="1707825951109" duration="5274000" />
+      <workItem from="1707833468299" duration="2089000" />
+      <workItem from="1707933581639" duration="3052000" />
+      <workItem from="1708034344379" duration="1113000" />
+      <workItem from="1708038909417" duration="1645000" />
+      <workItem from="1708106279421" duration="1907000" />
     </task>
     <servers />
   </component>
@@ -222,6 +229,6 @@
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$controller.coverage" NAME="controller Coverage Results" MODIFIED="1707575505594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lnxmanager" />
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$main.coverage" NAME="main Coverage Results" MODIFIED="1707345345712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1707477307171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lnxmanager" />
-    <SUITE FILE_PATH="coverage/filesystem_cloudlinux$.coverage" NAME=" Coverage Results" MODIFIED="1707821429792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/filesystem_cloudlinux$.coverage" NAME=" Coverage Results" MODIFIED="1707834714433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>
