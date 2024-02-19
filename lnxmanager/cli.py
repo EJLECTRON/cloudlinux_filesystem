@@ -197,7 +197,7 @@ def get_full_permissions_for_dir(path: str, human: bool) -> dict:
 
 def get_size_of_dir(data: str) -> str:
     """ get the size of directory
-    :param path: the path to the object: str
+    :param data: the data of the directory: str
     :return the size of the directory: int"""
     try:
         return data.split('\n')[0].split()[1]

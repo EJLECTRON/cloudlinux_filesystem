@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0db9d3fe-4e77-4fba-b2f6-9fa5cdf1a265" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lnxmanager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lnxmanager/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lnxmanager/cli.py" beforeDir="false" afterPath="$PROJECT_DIR$/lnxmanager/cli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/file_permissions_without_flags.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/tests_lnxmanager.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/tests_lnxmanager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,6 +205,7 @@
       <workItem from="1708034344379" duration="1113000" />
       <workItem from="1708038909417" duration="1645000" />
       <workItem from="1708106279421" duration="1907000" />
+      <workItem from="1708364477865" duration="2824000" />
     </task>
     <servers />
   </component>
@@ -219,13 +217,26 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="change_dir" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/filesystem_cloudlinux$cli.coverage" NAME="cli Coverage Results" MODIFIED="1708110346925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lnxmanager" />
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$controller.coverage" NAME="controller Coverage Results" MODIFIED="1707575505594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lnxmanager" />
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$main.coverage" NAME="main Coverage Results" MODIFIED="1707345345712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/filesystem_cloudlinux$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1707477307171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lnxmanager" />
